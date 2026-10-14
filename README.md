@@ -1,72 +1,44 @@
-# Full-Stack Hello World App
+# WordPress with Docker
 
-A complete, production-ready full-stack application with React + TypeScript frontend, NestJS backend, MySQL database, Docker containerization, Nginx reverse proxy, and automated GitHub Actions deployment.
+Local WordPress development environment using Docker Compose.
 
-## Tech Stack
+## Services
 
-- **Frontend**: React + TypeScript + Vite
-- **Backend**: NestJS
-- **Database**: MySQL
-- **Containerization**: Docker + Docker Compose
-- **Reverse Proxy**: Nginx
-- **CI/CD**: GitHub Actions
+| Service    | Port  | Description              |
+|------------|-------|--------------------------|
+| WordPress  | 8080  | CMS at http://localhost:8080 |
+| phpMyAdmin | 8081  | DB UI at http://localhost:8081 |
+| MariaDB    | —     | Database (internal only) |
 
-## Project Structure
+## Quick Start
 
-```
-full-stack-app/
-├── docker-compose.yml
-├── README.md
-├── .github/workflows/deploy.yml
-├── frontend/
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── vite.config.ts
-│   ├── index.html
-│   └── src/
-├── backend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── nest-cli.json
-│   └── src/
+```bash
+# 1. Clone the repo
+git clone <your-repo-url>
+cd <repo-folder>
+
+# 2. Create your environment file
+cp .env.example .env
+# Edit .env and set your passwords
+
+# 3. Start
+docker compose up -d
+
+# 4. Open WordPress and complete the install
+open http://localhost:8080
 ```
 
-## Local Development
+## Useful Commands
 
-### Prerequisites
+```bash
+docker compose up -d        # Start in background
+docker compose down         # Stop all services
+docker compose logs -f      # View logs
+docker compose exec database sh  # Open DB shell
+```
 
-- Docker and Docker Compose installed
-- Git installed
+## Notes
 
-### Running Locally
-
-1. **Clone the repository**:
-
-   ```bash
-   git clone <your-repo-url>
-   cd full-stack-app
-   ```
-
-2. **Start all services**:
-
-   ```bash
-   docker compose up --build
-   ```
-
-3. **Stop services**:
-
-   ```bash
-   docker compose down
-   ```
-
-4. **Stop and remove volumes** (clears database):
-   ```bash
-   docker compose down -v
-   ```
-
-## License
-
-MIT
+- WordPress files are stored in `wordpress-files/` (gitignored)
+- Database data persists in a Docker named volume (`db_data`)
+- Never commit `.env` — it contains your passwords
